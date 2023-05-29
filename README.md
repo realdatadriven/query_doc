@@ -82,21 +82,24 @@ print(query_parts)
 sql = qd.get_query_sql(None)
 print(sql)
 ```
-
+```python
     {'name': None, 'desc': None, 'select': 'SELECT "TABLE_A"."FILED_A" AS "FieldA"\n    , "TABLE_B"."FILED_B" AS "FieldB"\n    , (("TABLE_A"."FILED_A") || ( "TABLE_B"."FILED_B")) AS "FieldA+FieldB"\n', 'from_': 'FROM "TABLE_A"\n', 'join': 'LEFT OUTER JOIN (\n    SELECT *\n    FROM "TABLE_B"\n) AS "TABLE_B" ON (\n    "TABLE_B"."FK_FROM_A" = "TABLE_A"."KEY_FIELD"\n    AND "TABLE_B"."DATE_FIELD" = "TABLE_A"."DATE_FIELD"\n)\n', 'where': 'WHERE "TABLE_A"."COND_FIELD_A" IS NOT NULL \n    AND "TABLE_A"."DATE_FIELD" = \'{YYYY-MM-DD}\'\n', 'group_by': '', 'order_by': '', 'having': '', 'window': '', 'extras': None, 'active': True}
-    SELECT "TABLE_A"."FILED_A" AS "FieldA"
-        , "TABLE_B"."FILED_B" AS "FieldB"
-        , (("TABLE_A"."FILED_A") || ( "TABLE_B"."FILED_B")) AS "FieldA+FieldB"
-    FROM "TABLE_A"
-    LEFT OUTER JOIN (
-        SELECT *
-        FROM "TABLE_B"
-    ) AS "TABLE_B" ON (
-        "TABLE_B"."FK_FROM_A" = "TABLE_A"."KEY_FIELD"
-        AND "TABLE_B"."DATE_FIELD" = "TABLE_A"."DATE_FIELD"
-    )
-    WHERE "TABLE_A"."COND_FIELD_A" IS NOT NULL 
-        AND "TABLE_A"."DATE_FIELD" = '{YYYY-MM-DD}'
+```
+```sql
+SELECT "TABLE_A"."FILED_A" AS "FieldA"
+    , "TABLE_B"."FILED_B" AS "FieldB"
+    , (("TABLE_A"."FILED_A") || ( "TABLE_B"."FILED_B")) AS "FieldA+FieldB"
+FROM "TABLE_A"
+LEFT OUTER JOIN (
+    SELECT *
+    FROM "TABLE_B"
+) AS "TABLE_B" ON (
+    "TABLE_B"."FK_FROM_A" = "TABLE_A"."KEY_FIELD"
+    AND "TABLE_B"."DATE_FIELD" = "TABLE_A"."DATE_FIELD"
+)
+WHERE "TABLE_A"."COND_FIELD_A" IS NOT NULL 
+    AND "TABLE_A"."DATE_FIELD" = '{YYYY-MM-DD}'
+```
     
     
 
@@ -110,6 +113,7 @@ sql = qd.set_date(sql, dates)
 print(sql)
 ```
 
+```sql
     SELECT "TABLE_A"."FILED_A" AS "FieldA"
         , "TABLE_B"."FILED_B" AS "FieldB"
         , (("TABLE_A"."FILED_A") || ( "TABLE_B"."FILED_B")) AS "FieldA+FieldB"
@@ -123,7 +127,7 @@ print(sql)
     )
     WHERE "TABLE_A"."COND_FIELD_A" IS NOT NULL 
         AND "TABLE_A"."DATE_FIELD" IN ('2023-01-31')
-    
+ ```  
     
 
 
