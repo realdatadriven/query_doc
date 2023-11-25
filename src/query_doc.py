@@ -209,11 +209,11 @@ class QueryDoc():
         return sql
     def set_str_env(self, _str: str) -> str:
         '''Set / replace environmental variable @ENV.NAME to real value in os.environ'''
-        _patt = re.compile(r'@ENV\..+', re.I)
+        _patt = re.compile(r'@ENV\.\w+', re.I)
         _matchs = re.findall(_patt, _str)
         if len(_matchs) > 0:
             for _env in _matchs:
-                _environ = re.sub(r'@ENV\.\w+', '', str(_env))
+                _environ = re.sub(r'@ENV\.+', '', str(_env))
                 try:
                     _str = re.sub(_env, os.environ.get(_environ), _str)
                 except Exception as _err:# pylint: disable=broad-exception-caught
