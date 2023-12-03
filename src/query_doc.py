@@ -34,9 +34,11 @@ class QueryDoc():
     that otherwise would be impossible to manage or maintain"""
     def __init__(self, query_parts: dict):
         self.query_parts = query_parts if query_parts else {}
-    def field(self) -> Field:
+    def field(self, args: dict) -> Field:
         """Query field or variable"""
         _field = Field()
+        if args:          
+            _field = Field(**args)
         return _field
     def add_field(self, _field: Field):
         '''Add field to the main query parts dict'''
@@ -46,12 +48,14 @@ class QueryDoc():
             print('Field.select is required')
         else:
             self.query_parts[_field.name] = _field.get_dict()
-    def remove_fields(self, name: str) -> None:
+        return self
+    def remove_fields(self, name: str):
         '''Remove field to the main query parts dict'''
         try:
             del self.query_parts[name]
         except KeyError as _err:
             print(str(_err))
+        return self
     def get_query_parts(self) -> dict:
         '''return the query parts object'''
         return dict(self.query_parts)
@@ -213,7 +217,7 @@ class QueryDoc():
         _matchs = re.findall(_patt, _str)
         if len(_matchs) > 0:
             for _env in _matchs:
-                _environ = re.sub(r'@ENV\.+', '', str(_env))
+                _environ = re.sub(r'@ENV\.', '', str(_env))
                 try:
                     _str = re.sub(_env, os.environ.get(_environ), _str)
                 except Exception as _err:# pylint: disable=broad-exception-caught
