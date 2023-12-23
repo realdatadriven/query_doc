@@ -34,10 +34,10 @@ class QueryDoc():
     that otherwise would be impossible to manage or maintain"""
     def __init__(self, query_parts: dict):
         self.query_parts = query_parts if query_parts else {}
-    def field(self, args: dict) -> Field:
+    def field(self, args: Optional[dict]) -> Field:
         """Query field or variable"""
         _field = Field()
-        if args:          
+        if args:  
             _field = Field(**args)
         return _field
     def add_field(self, _field: Field):
