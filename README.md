@@ -71,9 +71,10 @@ qd.add_field(_field)
 query_parts = qd.get_query_parts()
 print(query_parts)
 ```
+```py
 
     {'FieldA': {'name': 'FieldA', 'desc': 'FieldA description', 'select': 'SELECT "TABLE_A"."FILED_A" AS "FieldA"\n', 'from_': 'FROM "TABLE_A"\n', 'join': None, 'where': 'WHERE "TABLE_A"."COND_FIELD_A" IS NOT NULL \n    AND "TABLE_A"."DATE_FIELD" = \'{YYYY-MM-DD}\'\n', 'group_by': None, 'order_by': None, 'having': None, 'window': None, 'extras': None, 'active': True}, 'FieldB': {'name': 'FieldB', 'desc': 'FieldB description', 'select': '    , "TABLE_B"."FILED_B" AS "FieldB"\n', 'from_': None, 'join': 'LEFT OUTER JOIN (\n    SELECT *\n    FROM "TABLE_B"\n) AS "TABLE_B" ON (\n    "TABLE_B"."FK_FROM_A" = "TABLE_A"."KEY_FIELD"\n    AND "TABLE_B"."DATE_FIELD" = "TABLE_A"."DATE_FIELD"\n)\n', 'where': None, 'group_by': None, 'order_by': None, 'having': None, 'window': None, 'extras': None, 'active': True}, 'FieldA+FieldB': {'name': 'FieldA+FieldB', 'desc': 'FieldA Concat FieldB description', 'select': '    , (@FieldA || @FieldB) AS "FieldA+FieldB"\n', 'from_': None, 'join': None, 'where': None, 'group_by': None, 'order_by': None, 'having': None, 'window': None, 'extras': None, 'active': True}}
-    
+```
 
 # GET QUERY STRING (SQL)
 
@@ -98,7 +99,7 @@ print(sql)
     WHERE "TABLE_A"."COND_FIELD_A" IS NOT NULL 
         AND "TABLE_A"."DATE_FIELD" = '{YYYY-MM-DD}'
     
-    
+
 
 # SET DATE
 
@@ -109,7 +110,7 @@ dates = [datetime.date(2023, 1, 31)]
 sql = qd.set_date(sql, dates)
 print(sql)
 ```
-
+```sql
     SELECT "TABLE_A"."FILED_A" AS "FieldA"
         , "TABLE_B"."FILED_B" AS "FieldB"
         , (("TABLE_A"."FILED_A") || ( "TABLE_B"."FILED_B")) AS "FieldA+FieldB"
@@ -123,7 +124,7 @@ print(sql)
     )
     WHERE "TABLE_A"."COND_FIELD_A" IS NOT NULL 
         AND "TABLE_A"."DATE_FIELD" IN ('2023-01-31')
-    
+```   
     
 
 
