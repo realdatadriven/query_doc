@@ -172,9 +172,15 @@ class QueryDoc():
                     sql = re.sub(patt, procc, sql)
         patt = re.compile(r"'?\{.*?\}'?", re.IGNORECASE)
         matchs = re.findall(patt, sql)
+        patt_dts = re.compile(
+            r'YYYY.?MM.?DD|AAAA.?MM.?DD|YY.?MM.?DD|AA.?MM.?DD|YYYY.?MM|AAAA.?MM|YY.?MM|AA.?MM|MM.?DD',
+            re.IGNORECASE
+        )
         if len(matchs) > 0:
             for _m in matchs:
                 frmt = _m
+                if len(re.findall(patt_dts, frmt)) == 0:
+                    continue
                 dt_format_final = frmt.replace('YYYY','%Y') #FULL YEAR
                 dt_format_final = dt_format_final.replace('YY','%y') #YY YEAR
                 dt_format_final = dt_format_final.replace('YY','%y') #YY YEAR
@@ -187,13 +193,12 @@ class QueryDoc():
                     procc = re.sub(patt, dates[0].strftime(dt_format_final), _m)
                 else:
                     procc = re.sub(patt, dates.strftime(dt_format_final), _m)
-                patt =  re.compile(r'(' + _m + ')', re.IGNORECASE)
-                sql = re.sub(patt, procc, sql)
-        patt = re.compile(
-            r'YYYY.?MM.?DD|AAAA.?MM.?DD|YY.?MM.?DD|AA.?MM.?DD|YYYY.?MM|AAAA.?MM|YY.?MM|AA.?MM|MM.?DD',
-            re.IGNORECASE
-        )
-        matchs = re.findall(patt, sql)
+                try:
+                    patt =  re.compile(r'(' + _m + ')', re.IGNORECASE)
+                    sql = re.sub(patt, procc, sql)
+                except Exception as _err:
+                    pass
+        matchs = re.findall(patt_dts, sql)
         if len(matchs) > 0:
             for _m in matchs:
                 frmt = _m
