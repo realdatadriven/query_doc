@@ -210,9 +210,9 @@ class QueryDoc():
                 dt_format_final = dt_format_final.replace('MM','%m') #MONTH YEAR
                 dt_format_final = dt_format_final.replace('DD','%d') #DAY YEAR
                 if isinstance(dates, list):
-                    procc = re.sub(patt, dates[0].strftime(dt_format_final), _m)
+                    procc = re.sub(patt_dts, dates[0].strftime(dt_format_final), _m)
                 else:
-                    procc = re.sub(patt, dates.strftime(dt_format_final), _m)
+                    procc = re.sub(patt_dts, dates.strftime(dt_format_final), _m)
                 patt =  re.compile(r'(' + _m + ')', re.IGNORECASE)
                 sql = re.sub(patt, procc, sql)
         return sql
